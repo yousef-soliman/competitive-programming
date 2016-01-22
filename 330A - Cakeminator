@@ -1,0 +1,53 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+using namespace std;
+typedef long long ll;
+
+int main() {
+	int N, M;
+	scanf("%d %d\n", &N, &M);
+	char c;
+	bool row[11] = {0};
+	bool col[11] = {0};
+	for(int i = 0; i < N; i++) {
+		for(int j = 0; j < M; j++) {
+			scanf("%c", &c);
+			if(c == 'S') {
+				row[i] = 1;
+				col[j] = 1;
+			}
+		}
+		getchar();
+	}
+	int cnt = 0;
+	for(int i = 0; i < N; i++) { 
+		if(!row[i]) {
+			cnt+=M;
+		}
+	}
+	for(int i = 0; i < M; i++) {
+		int cc = 0;
+		if(!col[i]) {
+			for(int j = 0; j < N; j++) {
+				if(!row[j]) {
+					cc++;
+				}
+			}
+			cnt+=N-cc;
+		}
+	}
+	cout << cnt;
+}
+
