@@ -1,0 +1,50 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+using namespace std;
+typedef long long ll;
+
+int main() {
+	int N, M, P;
+	int x1,x2,y1,y2;
+	int mat[505][505] = {0};
+	while(cin >> N >> M >> P ) {
+		if(!N && !M && !P) break; 
+		int cnt = 0;
+		while(P--) {
+			cin >> x1 >> y1 >> x2 >> y2;
+			for(int i = min(x1,x2)-1; i < max(x1,x2); i++) {
+				for(int  j = min(y1,y2)-1; j < max(y2,y1) ; j++){
+					if(mat[i][j] == 0) {
+						cnt++;
+						mat[i][j] = 1;
+					}
+				}
+			}
+		}
+		int c =(N*M) - cnt;
+		if(c == 0) {
+			cout << "There is no empty spots."<< endl;
+		}
+		else if( c == 1) {
+			cout << "There is one empty spot."<< endl;
+		}
+		else { 
+			printf("There are %d empty spots.\n", c);
+		}
+		memset(mat,0,sizeof(mat));
+	}
+}
+
+
