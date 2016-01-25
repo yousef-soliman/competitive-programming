@@ -1,0 +1,72 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+using namespace std;
+typedef long long ll;
+void rotate(char c[][101], char v[][101], int n) {
+	for(int i = 0; i < n; i++) {
+			for(int j = 0; j < n; j++) {
+				v[i][j] = c[n-j-1][i];
+			}
+		}
+}
+int check(char big[][101], char s[][101],int N,int n) {
+	int c = 0;
+	for(int i = 0; i+n <= N; i++) {
+		for(int j = 0; j+n <= N; j++) {
+			int cnt = 0;
+			for(int k = 0; k < n; k++){
+				for(int m = 0; m < n; m++){
+					if(big[i+k][j+m] == s[k][m]){
+						cnt++;
+					}
+				}
+			}
+			if(cnt == n*n) c++;
+		}
+	}
+	return c;
+}
+int main() {
+	int N, n;
+	char big[101][101];
+	char small[101][101];
+	char temp[101][101];
+	bool res[4] = {0};
+	while(cin >> N >> n ) {
+		
+		if(!N && !n) break;
+		getchar();
+		for(int i = 0; i < N; i++) {
+			for(int j = 0; j < N; j++) {
+				scanf("%c", &big[i][j]);
+			}
+			getchar();
+		}
+		for(int i = 0; i < n; i++) {
+			for(int j = 0; j < n; j++) {
+				scanf("%c", &small[i][j]);
+			}
+			getchar();
+		}
+		for(int i = 0;i < 4; i++) {
+			cout <<check(big,small,N,n) <<((i == 3)? "":" ");
+			rotate(small,temp,n);
+			memcpy(small,temp,sizeof(big));
+		}
+		cout << endl;
+	}
+}
+
+
