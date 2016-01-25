@@ -1,0 +1,38 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+using namespace std;
+typedef long long ll;
+int main() {
+	int N , p , q;
+	vector < pair<int, int> > v;
+	pair<int, int> l;
+	cin >> N;
+	for(int i = 0; i < N ; i++)  {
+		cin >> p >> q;
+		l = make_pair(p,q);
+		v.push_back(l);
+	}
+	sort(v.begin(),v.end());
+	bool flag = 0;
+	for(int i = 0; i < v.size() - 1; i++) {
+		if(v[i].second > v[i+1].second) {
+			flag = 1;
+			break;
+		} 
+	}
+	cout <<( (flag) ? "Happy Alex" : "Poor Alex")<< endl;
+}
+
+
