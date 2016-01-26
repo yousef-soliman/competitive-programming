@@ -1,0 +1,98 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+using namespace std;
+typedef long long ll;
+struct constnt{
+	int ID;
+	int solved;
+	int ptime;
+	int incorrect[10];
+	int correct[10];
+};
+bool myfunction(constnt c, constnt c2) {
+	if(c.solved == c2.solved) {
+		if(c.ptime == c2.ptime) {
+			return c.ID < c2.ID;
+		}
+		else {
+			return c2.ptime > c.ptime;
+		}
+	}
+	return c.solved > c2.solved;
+}
+int main() {
+	int T;
+	int n, problem, p;
+	char statu;
+	vector<constnt> v;
+	cin >> T;
+	getchar();
+	getchar();
+	while(T--) {
+		string s;
+		while(getline(cin ,s) && s.size() > 0){
+			stringstream ss;
+			ss << s;
+			ss >> n >> problem >> p >> statu;
+			//cout << n  << " " << problem << " " << p << " " << statu <<endl;; 
+			constnt c = {0,0,0,{0},{0}};
+			int f = -1;
+			for(int i = 0 ; i < v.size(); i++) {
+				if(v[i].ID == n) {
+					f = i;
+					break;
+				}
+			}
+			if(f == -1){
+				if(statu == 'C') {
+					c.ID = n;
+					c.solved++;
+					c.ptime+=p;
+					c.correct[problem] = 1;
+				}
+				else if( statu == 'I') {
+					c.ID = n;
+					c.incorrect[problem]++;
+				}
+				else {
+					c.ID = n;
+				}
+				v.push_back(c);
+			}
+			else {
+				if(statu == 'C') {
+					if(!v[f].correct[problem]){ 
+						v[f].solved++ ;
+						v[f].ptime+=p;
+						v[f].ptime += (v[f].incorrect[problem] * 20);
+						v[f].correct[problem] = 1;
+					}
+				}
+				else if( statu == 'I') {
+					v[f].incorrect[problem]++;
+				}
+			}
+		}
+		sort(v.begin(),v.end(),myfunction);
+		for(int  i =0 ; i < v.size(); i++) {
+			cout << v[i].ID << " " << v[i].solved << " " << v[i].ptime << endl;
+		}
+		v.clear();
+		if(T) cout << endl;
+	}
+}
+
+
