@@ -1,0 +1,90 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+using namespace std;
+typedef long long ll;
+int main() {
+	vector <string> vignore, vtitles, vword;
+	vector < vector<string> > v;
+	string s;
+	set<string> sset;
+	while(cin >> s) {
+		if(s == "::") break;
+		vignore.push_back(s);
+	}
+	string ss;
+	getchar();
+	while( getline(cin , s )) {
+		for(int i = 0; i < s.size(); i++) {
+			s[i] = tolower(s[i]);
+		}
+		vtitles.push_back(s);
+	}
+	for(int i = 0; i < vtitles.size(); i++) {
+		ss = vtitles[i];
+		string w = "";
+		vector < string > vv;
+		for(int j = 0; j < ss.size(); j++) {
+			w+=ss[j];
+			if( ss[j] == ' ' || j == ss.size()-1) {
+				if(ss[j] == ' ')
+					w.erase(w.end()-1);
+				vv.push_back(w);
+				bool flag = 1;
+				for(int i = 0; i < vignore.size(); i++) {
+					if( vignore[i] == w) {
+						flag = 0;
+						break;
+					}
+				}
+				if(flag)
+					sset.insert(w);
+				w = "";
+			}
+		}
+		if(!vv.empty())
+			v.push_back(vv);
+	}
+	set<string>::iterator it;
+	for(it = sset.begin(); it != sset.end(); it++) {
+		vword.push_back(*it);
+	}
+	sort(vword.begin(),vword.end());
+	vector<string> res;
+	for(int k = 0; k < vword.size(); k++) {	
+		for(int i = 0; i < v.size(); i++) {
+			for(int j = 0; j < v[i].size(); j++) {
+				if(v[i][j] == vword[k]) {
+					for(int l = 0; l < v[i][j].size(); l++) {
+						v[i][j][l] = toupper(v[i][j][l]);
+					}
+					string select = "";
+					for(int m = 0; m < v[i].size(); m++) {
+						select += v[i][m] + ((m == v[i].size()-1)? "":" "); 	
+					}
+					res.push_back(select);
+					for(int l = 0; l < v[i][j].size(); l++) {
+						v[i][j][l] = tolower(v[i][j][l]);
+					}
+				}
+			}
+		}
+	}	
+	for(int i = 0; i < res.size(); i++) {
+		cout << res[i] << endl;
+	}
+}
+
+
