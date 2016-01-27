@@ -16,21 +16,6 @@
 #include <list>
 using namespace std;
 typedef long long ll;
-struct element{
-	int ID;
-	int team;
-};
-int search(list <element> l , int n) {
-	list<element>::iterator it;
-	int i = 1;
-	int res = -1;
-	for(it = l.begin(); it != l.end(); it++ ,i++) {
-		if((*it).team == n) {
-			res = i;
-		}
-	}
-	return res;
-}
 int main() {
 	int N  ,n ,x;
 	string s;
