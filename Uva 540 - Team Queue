@@ -1,0 +1,85 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+using namespace std;
+typedef long long ll;
+struct element{
+	int ID;
+	int team;
+};
+int search(list <element> l , int n) {
+	list<element>::iterator it;
+	int i = 1;
+	int res = -1;
+	for(it = l.begin(); it != l.end(); it++ ,i++) {
+		if((*it).team == n) {
+			res = i;
+		}
+	}
+	return res;
+}
+int main() {
+	int N  ,n ,x;
+	string s;
+	map < int, int> team;
+	int c = 0;
+	while (cin >> N){
+		if(!N) break;
+		c++;
+		printf("Scenario #%d\n", c);
+		for(int  i = 0; i < N; i++){
+			cin >>n;
+			for(int j = 0; j < n; j++) {
+				cin >> x;
+				team[x] = i+1;
+			}
+		}
+		map<int , queue <int> > v;
+		queue<int> q;
+		while(cin >> s) {
+			if(s == "ENQUEUE"){
+				cin >> n;
+				if(v[team[n]].empty()){
+					q.push(team[n]);
+				}
+				v[team[n]].push(n);
+			}
+			//for(int i = 0;i  < v.size(); i++) {
+				//while(!v[i].empty()) {
+					//cout << v[i].front() << endl;
+					//v[i].pop();
+				//}
+			//}
+			else if(s == "DEQUEUE") {
+				int t = q.front();
+				cout << v[t].front() <<endl;
+				v[t].pop();
+				if(v[t].empty())
+					q.pop();
+			}
+			else {
+				break;
+			}
+			
+			
+		}
+		cout << endl;
+		team.clear();
+	}
+	
+}
+
+
