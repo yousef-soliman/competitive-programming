@@ -1,0 +1,41 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+using namespace std;
+typedef long long ll;
+
+int main() {
+	set<string> st;
+	char c;
+	string s = "";
+	while((c = getchar()) != EOF) {
+		c = tolower(c);
+		if(c > 'z' || c < 'a') {
+			if(s == "") continue;
+			st.insert(s);
+			s = "";
+		}
+		if(c <= 'z' && c >= 'a'){
+			s += c;
+		}
+	}
+	set<string>::iterator it = st.begin();
+	for(it; it != st.end(); it++) {
+		cout << *it << endl;
+	}
+}
+
+
