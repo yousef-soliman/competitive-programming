@@ -1,0 +1,59 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#define pint pair<int,int>
+#define pchar pair<char,char>
+#define psi pair<string,int>
+using namespace std;
+typedef long long ll;
+
+int main() {
+	pint p;
+	bitset<26>bs(0);
+	int T;
+	cin >> T;
+	char a,b;
+	string s;
+	getchar();
+	while(T--) {
+		vector<vector<int> > v(27);
+		while(scanf("(%c,%c)\n",&a,&b)){
+			v[a-'A'].push_back(b-'A');
+			bs[a -'A'] = 1;
+			bs[b -'A'] = 1;
+		}
+		getline(cin,s);
+		getline(cin,s);
+		int m = 0;
+		int cnt = 0;
+		for(int i = 0; i < s.size(); i+=2) { 
+			if(bs[s[i] - 'A'] == 0) {
+				cnt++;
+			}
+			m++;
+		}
+		int c = 0;
+		for(int  i = 0; i < v.size(); i++) {
+			c += v[i].size();
+		}
+		c = m - c- cnt;
+		printf("There are %d tree(s) and %d acorn(s).\n", c, cnt);
+		bs.reset();
+	}
+	return 0;
+}
+
+
