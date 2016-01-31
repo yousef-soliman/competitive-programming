@@ -1,0 +1,77 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define pm make_pair
+#define gl(s) getline(cin , s);
+#define max3(x, y, z) max(x,max(y,z);  
+#define min3(x, y, z) min(x,min(y,z);
+#define mx INT_MAX  
+#define mn INT_MIN  
+using namespace std;
+typedef long long ll;
+void compare(string s, string s2) {
+	int i = 0;
+	int j = 0;
+	if(s.size() > s2.size()) {
+		cout << ">";
+		return;
+	}
+	else if(s.size() < s2.size()){
+		cout << "<";
+		return;
+	}
+	else{
+		while( i < s.size() && j < s2.size()) {
+			int x = s[j] - '0', y = s2[j] - '0';
+			if(x > y) {
+				cout << ">";
+				return;
+			}
+			else if(x < y) {
+				cout << "<";
+				return;
+			}
+			i++;
+			j++;
+		} 
+		cout << "=";
+	}
+}
+int main() {
+	string s1,s2;
+	gl(s1);
+	gl(s2);
+	int i = 0;
+	while(s1[i] == '0') {
+		i++;
+	}
+	s1 = s1.substr(i);
+	i = 0;
+	while(s2[i] == '0') {
+		i++;
+	}
+	s2 = s2.substr(i);
+	compare(s1,s2);
+	return 0;
+}
+
+
