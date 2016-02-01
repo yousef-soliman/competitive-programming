@@ -1,0 +1,80 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define pm make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z)  
+#define min3(x, y, z) min(x,min(y,z)
+#define mx INT_MAX 
+#define mn INT_MIN 
+using namespace std;
+typedef long long ll;
+vi v(30003), rank(30003,0);
+int find(int x) {
+	if(v[x] == x) { return x; }
+	else { return find(v[x]); } 
+}
+void unionSet(int x,int y) {
+	
+	int a = find(x);
+	int b = find(y);
+	if(a == b) return;
+	if(rank[a] > rank[b]) {
+		v[b] = a;
+	}
+	else {
+		v[a] = b;
+		if(rank[a] == rank[b]) {
+			rank[a]++;
+		}
+	}
+}
+bool isSame(int x,int y) {
+	return find(x) == find(y);
+}
+int main() {
+	int N, M;
+	int x ,y;
+	int T;
+	cin >> T;
+	while(T--) {
+		vi m(30003);
+		cin >> N>>M;
+		for(int i = 0;i < N;i++) {
+			v[i] = i;
+		}
+		rank.assign(50005,0);
+		for(int i = 0;i < M;i++) {
+			cin >> x >> y;
+			unionSet(x-1,y-1);
+		}
+		for(int i = 0;i < N;i++) {
+			m[find(i)]++;
+		}
+		sort(m.begin(),m.end());
+		int sol = m[m.size()-1];
+		printf("%d\n", sol);
+	}
+	return 0;
+}
+
+
