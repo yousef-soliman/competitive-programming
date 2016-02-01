@@ -1,0 +1,90 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define pm make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z)  
+#define min3(x, y, z) min(x,min(y,z)
+#define mx INT_MAX 
+#define mn INT_MIN 
+using namespace std;
+typedef long long ll;
+vi v(2000000), rank(2000000,0);
+int find(int x) {
+	if(v[x] == x) { return x; }
+	else { return find(v[x]); } 
+}
+void unionSet(int x,int y) {
+	
+	int a = find(x);
+	int b = find(y);
+	if(a == b) return;
+	if(rank[a] > rank[b]) {
+		v[b] = a;
+	}
+	else {
+		v[a] = b;
+		if(rank[a] == rank[b]) {
+			rank[a]++;
+		}
+	}
+}
+bool isSame(int x,int y) {
+	return find(x) == find(y);
+}
+int main() {
+	int T,N;
+	string s;
+	cin >> T;
+	getchar();
+	getchar();
+	while(T--) {
+		int cnt = 0, cn = 0;
+		cin >> N;
+		getchar();
+		for(int  i = 0; i < N+2; i++) {
+			v[i] = i;
+		}
+		while(gl(s)) {
+			int x , y;
+			char c;
+			if(s =="") { break; }
+			stringstream ss;
+			ss << s;
+			ss>> c>> x >> y;
+			if(c == 'c') {	
+				unionSet(x - 1 ,y - 1);
+			}
+			else if(c == 'q') {
+				if( isSame(x - 1,y- 1)) { cnt++; }
+				else { cn++; }
+			}
+		}
+		printf("%d,%d\n",cnt,cn);
+		if(T)cout << endl;
+		rank.assign(2000000,0);
+		
+	}
+	return 0;
+}
+
+
