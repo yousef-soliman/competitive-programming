@@ -1,0 +1,90 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#include <climits>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vvi vector <vector<int> >
+#define vvc vector <vector<char> >
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define mp make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z))  
+#define min3(x, y, z) min(x,min(y,z))
+#define mmx INT_MAX 
+#define mmn INT_MIN
+using namespace std;
+typedef long long ll;
+
+int main() {
+	int N = 11;
+	vi run;
+	for(int num = N; num < 9876543; num++) {
+		vi vv;
+		bitset<11> bs(0);
+		int tmp = num;
+		int used = 0;
+		bool f = 0;
+		while(tmp) {
+			vv.push_back(tmp % 10);
+			if(tmp %10 == 0){
+				f = 1;
+				break;
+			}
+			if(bs[tmp % 10] == 1){
+				f = 1;
+				break;
+			}
+			bs[tmp %10] = 1;
+			tmp /= 10;
+		}
+		if( f) {
+			continue;
+		}
+		bs.reset();
+		int i = 0, j;
+		for(int k = 0; k < vv.size(); k++) {
+			int x = vv[vv.size() - i - 1];
+			if(bs[x] == 1) break;
+			bs[x] = 1;
+			j = i;
+			j +=vv[vv.size() - i - 1];
+			i = j % vv.size();
+		}
+		if(vv[vv.size() - i - 1] == vv[vv.size() -1] && bs.count() == vv.size()) {
+			run.push_back(num);
+		}
+	}	
+	int T = 0;
+	while(cin >> N) {
+		if(N == 0) break;
+		T++;
+		int x;
+		for(int  i = 0; i < run.size(); i++) {
+			if(run[i] >= N) {
+				x = run[i];
+				break;
+			} 
+	}
+		printf("Case %d: %d\n",T ,x);
+	}
+	return 0;
+}
+
+
