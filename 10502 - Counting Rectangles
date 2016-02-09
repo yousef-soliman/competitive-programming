@@ -1,0 +1,79 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#include <climits>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vvi vector <vector<int> >
+#define vvc vector <vector<char> >
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define mp make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z))  
+#define min3(x, y, z) min(x,min(y,z))
+#define mmx INT_MAX 
+#define mmn INT_MIN
+using namespace std;
+typedef long long ll;
+
+int main() {
+	int N, M;
+	while(cin >> N) {
+		if(!N) break;
+		cin >> M;
+		vvi v;
+		getchar();
+		for(int i = 0; i < N; i++) {
+			vi vv;
+			char c;
+			for(int j = 0; j < M; j++) {
+				scanf("%c",&c);
+				vv.push_back(c-'0');
+			}
+			getchar();
+			v.push_back(vv);
+		}
+		int cnt = 0;
+		for(int i = 0; i < v.size(); i++) {
+			for(int j = 0; j < v[i].size(); j++) {
+				for(int k = 0; k <= i; k++){
+					for(int m = 0; m <= j; m++){
+						bool f = 1;
+						for(int l = k; l <= i &&f; l++) {
+							for(int n = m; n <= j; n++) {
+								if(v[l][n] == 0) {
+									f = 0;
+									break;
+								}
+							}
+						}
+						if(f){
+							cnt++;
+						}
+					}
+				}
+			}
+		}
+		cout << cnt << endl;
+		
+	}
+	return 0;
+}
+
+
