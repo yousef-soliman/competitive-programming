@@ -1,0 +1,103 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#include <climits>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vvi vector <vector<int> >
+#define vvc vector <vector<char> >
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define mp make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z))  
+#define min3(x, y, z) min(x,min(y,z))
+#define mmx INT_MAX 
+#define mmn INT_MIN
+using namespace std;
+typedef long long ll;
+
+int main() {
+	int N, M;
+	int T;
+	char c[101][101];
+	while(cin >> N >> M && N && M) {
+		if(T) {
+			cout << endl;
+		}
+		T++;
+		getchar();
+		for(int i = 0; i< N;i++) {
+			for(int j = 0; j < M; j++) {
+				scanf("%c",&c[i][j]);
+			}
+			getchar();
+		}
+		int mines[101][101];
+		memset(mines,-1,sizeof(mines));
+		for(int i = 0; i< N;i++) {
+			for(int j = 0; j < M; j++) {
+				int cnt = 0;
+				if(c[i][j] != '*') {
+					if(j > 0 && c[i][j-1] == '*') {
+						cnt++;
+					}
+					if(i > 0 && c[i-1][j] == '*') {
+						cnt++;
+					}
+					if(j > 0 && i > 0 && c[i-1][j-1] == '*') {
+						cnt++;
+					}
+					if(j > 0 && i < N-1 && c[i+1][j-1] == '*') {
+						cnt++;
+					}
+					if(j < M-1 && i > 0 && c[i-1][j+1] == '*') {
+						cnt++;
+					}
+					if(i < N-1 && c[i+1][j] == '*') {
+						cnt++;
+					}
+					if(j < M-1 && c[i][j+1] == '*') {
+						cnt++;
+					}
+					if(i < N-1 && j < M-1 && c[i+1][j+1] == '*') {
+						cnt++;
+					}
+					mines[i][j] = cnt;
+				}
+				
+			}
+		}
+		printf("Field #%d:\n",T);
+		for(int i = 0; i < N; i++) {
+			for(int j =0; j < M;j++) {
+				if(mines[i][j] == -1) {
+					cout << '*';
+				}
+				else { 
+					cout<< mines[i][j];
+				}
+			}
+			cout << endl;
+		}
+		
+	}
+	return 0;
+}
+
+
