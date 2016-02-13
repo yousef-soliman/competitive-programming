@@ -1,0 +1,88 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#include <climits>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vvi vector <vector<int> >
+#define vvc vector <vector<char> >
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define mp make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z))  
+#define min3(x, y, z) min(x,min(y,z))
+#define mmx INT_MAX 
+#define mmn INT_MIN
+using namespace std;
+typedef long long ll;
+struct sstime{
+	int hh;
+	int mm;
+	int ss;
+	int speed;
+};
+int main() {
+	string s;
+	vector <sstime> v;
+	while(gl(s)){
+		if(s.size() > 8) {
+			string sub = s.substr(0,2);
+			int hh = atoi(sub.c_str());
+			sub = s.substr(3,2);
+			int mm = (atoi(sub.c_str())); 
+			sub = s.substr(6,2);
+			int ss= (atoi(sub.c_str())); 
+			int speed;
+			sub.clear();
+			for(int i = 9; i < s.size();i++) {
+				sub+=s[i];
+			}
+			speed = atoi((sub.c_str()));
+			sstime st;
+			st.hh = hh;
+			st.mm = mm;
+			st.ss = ss;
+			st.speed = speed;
+			v.push_back(st);
+		}
+		else {
+			string sub = s.substr(0,2);
+			int hh = atoi(sub.c_str());
+			sub = s.substr(3,2);
+			int mm = (atoi(sub.c_str())); 
+			sub = s.substr(6,2);
+			int ss= (atoi(sub.c_str())); 
+			double dis = 0;
+			for(int i = v.size() - 1; i >= 0; i--) {
+				double st = 0;
+				st += hh - v[i].hh;
+				hh -= (hh - v[i].hh);
+				st += ((mm - v[i].mm) * 1.0) / 60;
+				mm -= (mm - v[i].mm);
+				st += ((ss - v[i].ss) * 1.0) / (60 * 60);
+				ss -= (ss - v[i].ss);
+				dis += st * v[i].speed;
+			}
+			printf("%s %.2f km\n",s.c_str(),dis);
+		}
+	}
+	return 0;
+}
+
+
