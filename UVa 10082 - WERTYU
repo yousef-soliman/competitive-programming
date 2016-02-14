@@ -1,0 +1,97 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#include <climits>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vvi vector <vector<int> >
+#define vvc vector <vector<char> >
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define mp make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z))  
+#define min3(x, y, z) min(x,min(y,z))
+#define mmx INT_MAX 
+#define mmn INT_MIN
+using namespace std;
+typedef long long ll;
+
+
+int main() {
+	string s;
+	map<char,char> m;
+	m['1'] = '`';
+	m['2'] = '1';
+	m['3'] = '2';
+	m['4'] = '3';
+	m['4'] = '3';
+	m['5'] = '4';
+	m['6'] = '5';
+	m['7'] = '6';
+	m['8'] = '7';
+	m['9'] = '8';
+	m['0'] = '9';
+	m['-'] = '0';
+	m['='] = '-';
+	m['\\'] = ']';
+	m[']'] = '[';
+	m['['] = 'P';
+	m['P'] = 'O';
+	m['O'] = 'I';
+	m['I'] = 'U';
+	m['U'] = 'Y';
+	m['Y'] = 'T';
+	m['Y'] = 'T';
+	m['T'] = 'R';
+	m['R'] = 'E';
+	m['E'] = 'W';
+	m['W'] = 'Q';
+	m['S'] = 'A';
+	m['D'] = 'S';
+	m['F'] = 'D';
+	m['G'] = 'F';
+	m['H'] = 'G';
+	m['J'] = 'H';
+	m['K'] = 'J';
+	m['L'] = 'K';
+	m[';'] = 'L';
+	m['\''] = ';';
+	m['X'] = 'Z';
+	m['C'] = 'X';
+	m['V'] = 'C';
+	m['B'] = 'V';
+	m['N'] = 'B';
+	m['M'] = 'N';
+	m[','] = 'M';
+	m['.'] = ',';
+	m['/'] = '.';
+	
+	while(gl(s)){
+		for(int  i = 0; i < s.size(); i++) {
+			if(m[s[i]])
+				cout << m[s[i]];
+			else cout << s[i];
+		}
+		cout << endl;
+	}
+	
+	return 0;
+}
+
+
