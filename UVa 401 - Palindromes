@@ -1,0 +1,77 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#include <climits>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vvi vector <vector<int> >
+#define vvc vector <vector<char> >
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define mp make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z))  
+#define min3(x, y, z) min(x,min(y,z))
+#define mmx INT_MAX 
+#define mmn INT_MIN
+using namespace std;
+typedef long long ll;
+map <char,char> m;
+bool isPalindrome(string s) {
+	int N  = s.size() / 2;
+	for(int i = 0; i < N; i++) {
+		if(s[i] != s[s.size()-1-i]){
+			return false;
+		}
+	}
+	return true;
+}
+bool isMirrored(string s) {
+	int N  = s.size() / 2+ s.size() % 2;
+	for(int i = 0; i < N; i++) {
+		if(m[s[i]] != s[s.size()-1-i]){
+			return false;
+		}
+	}
+	return true;
+}
+int main() {
+	string s;
+	string s1="ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
+    string s2="A   3  HIL JM O   2TUVWXY51SE Z  8 ";
+    for(int i=0;i<s1.size();i++) m[s1[i]]=s2[i];
+	int T = 0;
+	while(cin >> s) {
+		if(isPalindrome(s) && isMirrored(s) ) {
+			cout << s << " -- is a mirrored palindrome." << endl;
+		} 
+		else if(isPalindrome(s) && !isMirrored(s)) {
+			cout << s << " -- is a regular palindrome." << endl;
+		}
+		else if(!isPalindrome(s) && isMirrored(s)) {
+			cout << s << " -- is a mirrored string." << endl;
+		}
+		else {
+			cout << s << " -- is not a palindrome." << endl;
+		}
+		cout << endl;
+	}
+	return 0;
+}
+
+
