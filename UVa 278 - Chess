@@ -1,0 +1,60 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#include <climits>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vvi vector <vector<int> >
+#define vvc vector <vector<char> >
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define mp make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z))  
+#define min3(x, y, z) min(x,min(y,z))
+#define mmx INT_MAX 
+#define mmn INT_MIN
+using namespace std;
+typedef long long ll;
+
+
+int main() {
+	int N, M;
+	char c;
+	int T;
+	cin >> T;
+	while(T--) {
+		cin >> c >> N >> M;
+		if(c == 'r') {
+			cout << N << endl;
+		}
+		else if( c == 'k') {
+			cout << ((N * M) /2) + ((M*N)%2 ==1 ) << endl;
+		}
+		else if( c == 'Q') {
+			cout << min(N,M) << endl;
+		}
+		else if( c == 'K') {
+			cout << ((N/2)+(N%2 == 1)) * ((M/2)+(M%2 == 1)) << endl; 
+		}
+	}
+	
+	return 0;
+}
+
+
