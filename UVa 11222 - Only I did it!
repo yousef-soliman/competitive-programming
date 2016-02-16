@@ -1,0 +1,94 @@
+	#include <iostream>
+	#include <string>
+	#include <cstdio>
+	#include <map>
+	#include <algorithm>
+	#include <stack>
+	#include <queue>
+	#include <sstream>
+	#include <utility>
+	#include <cmath>
+	#include <bitset>
+	#include <cstring>
+	#include <utility>
+	#include <set>
+	#include <cctype>
+	#include <list>
+	#include <climits>
+	#define ii pair<int,int>
+	#define psi pair<string,int>
+	#define vi vector<int>
+	#define vvi vector <vector<int> >
+	#define vvc vector <vector<char> >
+	#define vs vector<string>
+	#define vl vector<long long>
+	#define vii vector<ii>
+	#define mp make_pair
+	#define gl(s) getline(cin , s)
+	#define max3(x, y, z) max(x,max(y,z))  
+	#define min3(x, y, z) min(x,min(y,z))
+	#define mmx INT_MAX 
+	#define mmn INT_MIN
+	using namespace std;
+	typedef long long ll;
+
+
+	int main() {
+		int T;
+		int s, x;
+		int problems[10001]={0};
+		int solved[3][10100];
+		cin >> T;
+		int t = 0;
+		while(T--) {
+			t++;
+			for(int i = 0; i < 3; i++) {
+				cin >> s;
+				solved[i][0] = s;
+				for(int  j = 1; j <= s; j++) {
+					cin >> x;
+					problems[x]++;
+					solved[i][j] = x;  
+				}
+			}
+			vvi vv;
+			int mx = -1,indx = 0;
+			for(int i = 0; i < 3; i++) {
+				int cnt = 0;
+				vi v;
+				v.push_back(i+1);
+				for(int  j = 1; j <= solved[i][0]; j++) {
+					if(problems[solved[i][j]] == 1){
+						cnt++;
+						v.push_back(solved[i][j]);	
+					}  
+				}
+				if(mx <= cnt) {
+					mx = cnt;
+					indx = i;
+					vv.push_back(v);
+				}
+				
+			}
+			printf("Case #%d:\n",t);
+			
+			for(int j = 0; j < vv.size(); j++) {
+				if(vv[j].size()-1 == mx) {
+					cout << vv[j][0] << " " <<vv[j].size()-1 ;
+					sort(vv[j].begin()+1,vv[j].end());
+					for(int i = 1; i < vv[j].size(); i++) {
+						cout <<" "<<vv[j][i];	
+					}			
+					cout << endl;
+				}
+			}
+			memset(problems,0,sizeof(problems));
+			memset(solved,0,sizeof(solved));
+			
+		}
+		
+		
+		return 0;
+	}
+
+
