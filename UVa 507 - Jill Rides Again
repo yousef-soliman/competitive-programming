@@ -1,0 +1,72 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#include <climits>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vvi vector <vector<int> >
+#define vvc vector <vector<char> >
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define mp make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z))  
+#define min3(x, y, z) min(x,min(y,z))
+#define mmx INT_MAX 
+#define mmn INT_MIN
+using namespace std;
+typedef long long ll;
+
+
+int main() {
+	int T,s;
+	int x;
+	cin  >> T;
+	for(int i = 1; i <= T; i++) {
+		cin >> s;
+		int sum = 0;
+		int start,end;
+		int mx = -1;
+		int a = 1;
+		int mxindx = 0;
+		for(int j = 1; j <= s-1; j++) {
+			cin >> x;
+			sum += x;
+			if(sum > mx ||(sum == mx) && ((j+1)-a) > mxindx) {
+				mx = sum;
+				start = a;
+				end = j+1;
+				mxindx = (j+1)-a;
+			} 
+			if(sum < 0) {
+				sum = 0;
+				a = j+1;
+			}
+		}
+		if(mx <= 0){
+			printf("Route %d has no nice parts\n",i);
+		}
+		else {
+			printf("The nicest part of route %d is between stops %d and %d\n",i,start,end);
+		}
+	}
+	
+	return 0;
+}
+
+
