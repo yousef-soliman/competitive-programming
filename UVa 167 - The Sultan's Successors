@@ -1,0 +1,84 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#include <climits>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vvi vector <vector<int> >
+#define vvc vector <vector<char> >
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define mp make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z))  
+#define min3(x, y, z) min(x,min(y,z))
+#define mmx INT_MAX 
+#define mmn INT_MIN
+#define all(v) v.begin(),v.end()
+#define mmset(A) memset(A,0,sizeof(A));
+#define ll long long
+using namespace std;
+int N = 8;
+int arr[8][8];
+int row[8]={0};
+int mx = 0;
+bool isValid(int r, int c) {
+	for(int i = 0; i < c; i++) {
+		if(row[i] == r || (abs(i-c) == abs(row[i]-r))){
+			return false;
+		}
+	} 
+	return true;
+}
+void backtrack(int l) {
+	if(l == N) {
+		int sum = 0;
+		for(int i = 0;i < N;i++) {
+			sum +=arr[i][row[i]];
+		}
+		mx = max(mx, sum);
+	}
+	for(int i = 0; i < N; i++) {
+		
+		if(isValid(i,l))
+		{	
+			row[l] = i;
+			backtrack(l+1);
+		}
+		
+	}
+}
+
+int main() {
+	int T;
+	cin >> T;
+	while(T--) {
+		for(int i = 0; i < N;i++) {
+			for(int j = 0; j < N;j++) {
+				cin >> arr[i][j];
+			}	
+		}
+		backtrack(0);
+		printf("%5d\n",mx);
+		mx = 0;
+		mmset(row);
+	}
+	
+}
+
+
