@@ -1,0 +1,87 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#include <climits>
+#include <vector>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vvi vector<vector<int> >
+#define vvc vector<vector<char> >
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define mp make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z))  
+#define min3(x, y, z) min(x,min(y,z))
+#define mmx INT_MAX 
+#define mmn INT_MIN
+#define all(v) v.begin(),v.end()
+#define mmset(A) memset(A,0,sizeof(A));
+#define ll long long	
+using namespace std;
+vi v;
+vi re,res;
+int N;
+int sum = 0;
+int mx = 0;
+bool flag = 1;
+void backtrack(int l) {
+	if(mx < sum){
+			mx = sum;
+			res = re;
+	}
+	if(sum == N){
+		res = re;
+		flag = 0;
+	}
+	
+	
+	for(int i = l; i < v.size(); i++) {
+		if(sum + v[i] <= N&&flag){
+			sum = sum + v[i];
+			re.push_back(v[i]);
+			backtrack(i+1);
+			sum -= v[i];
+			re.pop_back();
+		}
+	}
+}
+
+int main() {
+	int  Track, x;
+	while(cin >> N) {
+		cin >> Track;
+		for(int i = 0; i < Track; i++) {
+			cin >> x;
+			v.push_back(x);
+		}
+		backtrack(0);
+		for(int i = 0; i < res.size();i++) {
+			cout << res[i] << " ";
+		}
+		cout<<"sum:"<<mx<< endl;
+		sum = 0;
+		mx = 0;
+		res.clear();
+		re.clear();
+		v.clear();
+		flag = 1;
+	}
+}
+
+
