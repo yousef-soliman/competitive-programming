@@ -1,0 +1,74 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#include <climits>
+#include <vector>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vvi vector<vector<int> >
+#define vvc vector<vector<char> >
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define mp make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z))  
+#define min3(x, y, z) min(x,min(y,z))
+#define mmx INT_MAX 
+#define mmn INT_MIN
+#define all(v) v.begin(),v.end()
+#define mmset(A) memset(A,0,sizeof(A));
+#define ll long long
+using namespace std;
+
+vvi graph(28);
+bool visited[28][28] = {0};
+int cnt = 0;
+int backtrack(int next) {
+	int mx = 0;
+	for(int i = 0; i < graph[next].size(); i++){
+		if(!visited[next][graph[next][i]]){
+			visited[next][graph[next][i]] = visited[graph[next][i]][next] = 1;
+			mx = max(backtrack(graph[next][i])+1,mx);
+			visited[next][graph[next][i]] = visited[graph[next][i]][next] =  0;
+		}
+	}
+	return mx;
+}
+int main() {
+	int N, M;
+	int x, y;
+	while(cin >> N >>M ) {
+		vi v;
+		graph.assign(28,v);
+		if(!N && !M){ break; }
+		for(int i = 0; i < M; i++){
+			cin >> x >> y;
+			graph[x].push_back(y);
+			graph[y].push_back(x);
+		}
+		int ans = 0;
+		for(int i = 0; i < N;i++) {
+			ans = max(backtrack(i),ans);
+			mmset(visited);
+		}
+		cout <<ans<< endl;
+		
+	}
+}
+
+
