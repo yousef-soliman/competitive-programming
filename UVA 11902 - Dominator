@@ -1,0 +1,107 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#include <climits>
+#include <cstdlib>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vvi vector <vector<int> >
+#define vvc vector <vector<char> >
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define mp make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z))  
+#define min3(x, y, z) min(x,min(y,z))
+#define mmx INT_MAX 
+#define mmn INT_MIN
+typedef long long ll;
+using namespace std;
+vvi graph;
+vi vis;
+vi org;
+void dfs(int u, int x){
+	if(u == x) return;
+	vis[u] = 1;
+	for(int i = 0; i < graph[u].size(); i++){
+		int v = graph[u][i];
+		if(!vis[v]) {
+			dfs(v,x);
+		}
+	}
+}
+void dfs(int u){
+	org[u] = 1;
+	for(int i = 0; i < graph[u].size(); i++){
+		int v = graph[u][i];
+		if(!org[v]) {
+			dfs(v);
+		}
+	}
+}
+int main(){	
+	int T, N, x;
+	cin >> T;
+	int t = 1;
+	while(T--) {
+		cin >> N;
+		graph.resize(N);
+		org.assign(N,0);
+		for(int i = 0; i < N; i++) {
+			for(int j = 0; j < N; j++) {
+				cin >> x;
+				if(x) {
+					graph[i].push_back(j);
+				}
+			}
+		}
+		dfs(0);
+		printf("Case %d:\n",t);
+		t++;
+		
+		for(int i = 0; i < N; i++) {
+			cout <<"+";
+			for(int l = 0; l < 2 * N - 1; l++)
+			cout <<"-";
+			cout << "+" << endl;
+			cout <<"|";
+			for(int j = 0; j < N; j++) {
+				vis.assign(N,0);
+				dfs(0,i);
+				if(vis[j] || !org[j]) {
+					cout << "N|";
+				}
+				else {
+					cout << "Y|";
+				}
+			}
+			cout << endl;
+			
+		}
+		cout <<"+";
+		for(int l = 0; l < 2 * N - 1; l++)
+		cout <<"-";
+		cout << "+" << endl;
+		graph.clear();
+	}
+	return 0;
+}
+
+
+
+
