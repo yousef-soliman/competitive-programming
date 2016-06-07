@@ -1,0 +1,128 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#include <climits>
+#include <cstdlib>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vvi vector <vector<int> >
+#define vvc vector <vector<char> >
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define mp make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z))  
+#define min3(x, y, z) min(x,min(y,z))
+#define mmx INT_MAX 
+#define mmn INT_MIN
+typedef long long ll;
+using namespace std;
+
+int main(){	
+	int N, M;
+	int mp[101][101]={0};
+	char ori[4] = { 'N', 'E', 'S', 'W'};
+	cin >> N >> M;
+	int x , y;
+	char c;
+	while(cin >> x >> y >> c) {
+		getchar();
+		string s;
+		gl(s);
+		int curr;
+		for(int i = 0; i < 4; i++) {
+			if(c == ori[i]) {
+				curr = i;	
+			}
+		}
+		
+		bool f = 1;
+		for(int i = 0; i < s.size(); i++) {
+			
+			if(s[i] == 'R') {
+				curr = (curr+1)%4;
+				
+			}
+			else if(s[i] == 'L') {
+				curr = ((curr-1)+4)%4;
+				
+			}
+			else  {
+				if(ori[curr] == 'N') {
+					if(y == M && !mp[x][y]) {
+						cout << x << " " << y << " " << ori[curr] << " LOST" << endl;
+						mp[x][y] = 1;
+						f = 0;
+						break;
+					}
+					else if(y == M && mp[x][y]) {
+						continue;
+					}
+					y += 1;
+				}
+				else if (ori[curr] == 'S') {
+					if(y == 0 && !mp[x][y]) {
+						cout << x << " " << y << " " << ori[curr] << " LOST" << endl;
+						mp[x][y] = 1;
+						f = 0;
+						break;
+					}
+					else if(y == 0 && mp[x][y]) {
+						continue;
+					}
+					y -= 1;
+				}
+				else if (ori[curr] == 'E') {
+					if(x == N && !mp[x][y]) {
+						cout << x << " " << y << " " << ori[curr] << " LOST" << endl;
+						mp[x][y] = 1;
+						f = 0;
+						break;
+					}
+					else if(x == N && mp[x][y]) {
+						continue;
+					}
+					x += 1;
+				
+				}
+				else if (ori[curr] == 'W') {
+					if(x == 0 && !mp[x][y]) {
+						cout << x << " " << y << " " << ori[curr] << " LOST" << endl;
+						mp[x][y] = 1;
+						f = 0;
+						break;
+					}
+					else if(x == 0 && mp[x][y]) {
+						continue;
+					}
+					x -= 1;
+				}
+
+			}
+		}
+		if(f)
+		cout << x << " " << y << " " << ori[curr] << endl;
+		
+	}	
+	
+	return 0;
+}
+
+
+
+
