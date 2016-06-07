@@ -1,0 +1,115 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#include <climits>
+#include <cstdlib>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vvi vector <vector<int> >
+#define vvc vector <vector<char> >
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define mp make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z))  
+#define min3(x, y, z) min(x,min(y,z))
+#define mmx INT_MAX 
+#define mmn INT_MIN
+typedef long long ll;
+using namespace std;
+
+int main(){	
+	int N, M;
+	int ins;
+	char mp[101][101];
+	char ori[4] = { 'N', 'L', 'S', 'O'};
+	while(cin >> N >> M >> ins) {
+		int x, y;
+		int cnt = 0;
+		if( !N && !M && !ins) break; 
+		getchar();
+		for(int i = 0; i < N; i++) {
+			for(int j = 0; j < M; j++) {
+				scanf("%c",&mp[i][j]);
+				if( mp[i][j] == 'N' ||mp[i][j] == 'L'
+					||mp[i][j] == 'S'||mp[i][j] == 'O') {
+					x = i;
+					y = j;
+				}
+			}
+			getchar();
+		}
+		string s;
+		gl(s);
+		int curr;
+		char c;
+		for(int i = 0; i < 4; i++) {
+			if(mp[x][y] == ori[i]) {
+				curr = i;
+				
+			}
+		}
+		
+		for(int i = 0; i < s.size(); i++) {
+			if(s[i] == 'D') {
+				curr = (curr+1)%4;
+				
+			}
+			else if(s[i] == 'E') {
+				curr = ((curr-1)+4)%4;
+			
+			}
+			else  {
+				
+				if(ori[curr] == 'N') {
+					if(x > 0 && mp[x-1][y] != '#' ) {
+						x -= 1;
+					}
+				}
+				else if (ori[curr] == 'S') {
+					if(x < N-1 && mp[x+1][y] != '#' ) {
+						x += 1;
+					}
+				}
+				else if (ori[curr] == 'L') {
+					if(y < M-1 && mp[x][y+1] != '#' ) {
+						y += 1;
+					}
+				}
+				else if (ori[curr] == 'O') {
+					if(y > 0 && mp[x][y-1] != '#' ) {
+						y -= 1;
+					}
+				}
+				if(mp[x][y] == '*') {
+					cnt++;
+					mp[x][y] = '.';
+				}
+				
+			}
+			
+		}
+		cout << cnt  << endl;
+	}	
+	
+	return 0;
+}
+
+
+
+
