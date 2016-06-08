@@ -1,0 +1,132 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#include <climits>
+#include <cstdlib>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vvi vector <vector<int> >
+#define vvc vector <vector<char> >
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define mp make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z))  
+#define min3(x, y, z) min(x,min(y,z))
+#define mmx INT_MAX 
+#define mmn INT_MIN
+typedef long long ll;
+using namespace std;
+int main(){	
+	int N, M, col;
+	char mp[11][11];
+	while(cin >> N >> M >>col) {
+		if(!N && !M && !col) {
+			break;
+		}
+		getchar();
+		
+		for(int i = 0; i < N; i++) {
+			for(int j = 0; j < M; j++){
+				scanf("%c",&mp[i][j]);
+			}
+			getchar();
+		}
+		int x = 0, y = col-1;
+		bool flag = 1;
+		int ans = 1;
+		bool vis[11][11] = {0};
+		int ans_num[11][11] = {0};
+		ans_num[x][y] = 1;
+		vis[x][y] = 1;
+		while(flag){
+			if(mp[x][y] == 'N') {
+					
+					if(x == 0) {
+						printf("%d step(s) to exit\n",ans);
+						flag = 0;
+						break;
+					}
+					if(vis[x-1][y]) {
+						printf("%d step(s) before a loop of %d step(s)\n",ans_num[x-1][y] - 1,ans - ans_num[x-1][y]+1);
+						flag = 0;
+						break;
+					}
+					x -= 1;
+					vis[x][y] = 1;
+					ans++;
+					ans_num[x][y] = ans;
+				}
+				else if(mp[x][y] == 'S') {
+					if(x == N-1) {
+						printf("%d step(s) to exit\n",ans);
+						flag = 0;
+						break;
+					}
+					if(vis[x+1][y]) {
+						printf("%d step(s) before a loop of %d step(s)\n",ans_num[x+1][y]-1,ans - ans_num[x+1][y] +1);
+						flag = 0;
+						break;
+					}
+					x += 1;
+					vis[x][y] = 1;
+					ans++;
+					ans_num[x][y] = ans;	
+				}
+				else if(mp[x][y] == 'E') {
+					if(y == M-1) {
+						printf("%d step(s) to exit\n",ans);
+						flag = 0;
+						break;
+					}
+					if(vis[x][y+1]) {
+						printf("%d step(s) before a loop of %d step(s)\n",ans_num[x][y+1]-1,ans - ans_num[x][y+1]+1);
+						flag = 0;
+						break;
+					}
+					y += 1;
+					vis[x][y] = 1;
+					ans++;
+					ans_num[x][y] = ans;
+				}
+				else if(mp[x][y] == 'W') {
+					if(y == 0) {
+						printf("%d step(s) to exit\n",ans);
+						flag = 0;
+						break;
+					}
+					if(vis[x][y-1]) {
+						printf("%d step(s) before a loop of %d step(s)\n",ans_num[x][y-1]-1,ans - ans_num[x][y-1]+1);
+						flag = 0;
+						break;
+					}
+					y -= 1;
+					vis[x][y] = 1;
+					ans++;
+					ans_num[x][y] = ans;
+				}
+		}
+		
+		
+	}
+	return 0;
+}
+
+
+
+
