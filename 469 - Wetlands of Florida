@@ -1,0 +1,85 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#include <climits>
+#include <cstdlib>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vvi vector <vector<int> >
+#define vvc vector <vector<char> >
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define mp make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z))  
+#define min3(x, y, z) min(x,min(y,z))
+#define mmx INT_MAX 
+#define mmn INT_MIN
+typedef long long ll;
+using namespace std;
+int dr[] = {0, 0 , 1, -1, 1, -1, 1, -1};
+int dc[] = {1, -1, 0, 0, 1, -1, -1, 1};
+int N, M;
+
+vs tmp;
+int floodfill(int r,int c,char c1,char c2) {
+	if(r < 0 || r >= N || c < 0|| c >= M) return 0;
+	if(tmp[r][c] != c1) return 0;
+	tmp[r][c] = c2;
+	int ans = 1;
+	for(int i = 0; i < 8; i++) {
+		ans += floodfill(r+dr[i],c+dc[i],c1,c2);
+	}
+	return ans;
+}
+int main(){	
+	int T;
+	cin >> T;
+	getchar();
+	getchar();
+	vs v;
+	while(T--) {
+
+		string s;
+		for(int i = 0; gl(s); i++) {
+			if(s.size() == 0) break;
+			if(s[0] != 'W'&&s[0] != 'L'){
+				int x,y;
+				tmp = v;
+				stringstream ss;
+				ss << s;
+				ss>> x>> y;
+				cout << floodfill(x-1, y-1,'W','.') << endl;
+				continue;
+			}
+			
+			M = s.size();
+			N = i+1;
+			v.push_back(s);
+			
+		}
+		if(T)
+		cout << endl;
+		v.clear();
+	}
+	return 0;
+}
+
+
+
+
