@@ -1,0 +1,81 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#include <climits>
+#include <cstdlib>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vvi vector <vector<int> >
+#define vvc vector <vector<char> >
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define mp make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z))  
+#define min3(x, y, z) min(x,min(y,z))
+#define mmx INT_MAX 
+#define mmn INT_MIN
+typedef long long ll;
+using namespace std;
+int dr[] = {0, 0 , 1, -1, 1, -1, 1, -1};
+int dc[] = {1, -1, 0, 0, 1, -1, -1, 1};
+vvi graph;
+vi vis;
+vi order;
+void topologicalSort(int u) {
+	vis[u] = 1;
+	for(int i = 0;i < graph[u].size();i++) {
+		int v = graph[u][i];
+		if(!vis[v]) {
+			topologicalSort(v);
+		}
+	}
+	order.push_back(u);
+}
+
+int main(){	
+	int N,M;
+	while(cin >> N >> M && N) {
+		graph.resize(N);
+		order.clear();
+		vis.assign(N,0);
+		int x,y;
+		while(M--) {
+			cin >> x >> y;
+			graph[x-1].push_back(y-1);
+		}
+		for(int i = 0;i < N; i++) {
+			if(!vis[i]){
+				topologicalSort(i);
+			}
+		}
+		for(int i = order.size()-1; i >= 0; i--) {
+			if(i == order.size()-1) {
+				cout << order[i]+1;
+			}
+			else 
+			cout << " "<< order[i]+1;
+		}
+		cout << endl;
+	}
+	return 0;
+}
+
+
+
+
