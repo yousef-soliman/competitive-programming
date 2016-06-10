@@ -1,0 +1,82 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#include <climits>
+#include <cstdlib>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vvi vector <vector<int> >
+#define vvc vector <vector<char> >
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define mp make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z))  
+#define min3(x, y, z) min(x,min(y,z))
+#define mmx INT_MAX 
+#define mmn INT_MIN
+typedef long long ll;
+using namespace std;
+int dr[] = {0, 0 , 1, -1, 1, -1, 1, -1};
+int dc[] = {1, -1, 0, 0, 1, -1, -1, 1};
+vs rc;
+int N ,M;
+int floodfill(int r,int c) {
+	if(r < 0 || r >= rc.size() || c < 0 || c >= rc[r].size()) return 0;
+	if(rc[r][c] != '1') return 0;
+	rc[r][c] = '0';
+	int ans = 1;
+	for(int i = 0;i < 8; i++) {
+		ans += floodfill(r+dr[i],c + dc[i]);
+	}
+	return ans;
+}
+
+int main(){	
+	int N;
+	int t = 0;
+	while(cin >> N){
+		t++;
+		getchar();
+		string s,e;
+		while(N--) {
+			gl(s);
+			rc.push_back(s);
+		}
+		N = rc.size();
+		bool f = 1;
+		int ans = 0;
+		for(int i = 0;i < N ; i++) {
+			for(int j = 0;j < rc[i].size(); j++) {
+				if(floodfill(i,j)) {
+					ans++;
+				}
+			}
+		}
+		printf("Image number %d contains %d war eagles.\n",t,ans);
+		rc.clear();
+		
+	}
+	
+	
+	return 0;
+}
+
+
+
+
