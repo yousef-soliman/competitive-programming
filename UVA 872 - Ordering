@@ -1,0 +1,115 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#include <climits>
+#include <cstdlib>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vvi vector <vector<int> >
+#define vvc vector <vector<char> >
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define mp make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z))  
+#define min3(x, y, z) min(x,min(y,z))
+#define mmx INT_MAX 
+#define mmn INT_MIN
+typedef long long ll;
+using namespace std;
+int dr[] = {0, 0 , 1, -1, 1, -1, 1, -1};
+int dc[] = {1, -1, 0, 0, 1, -1, -1, 1};
+vvi graph;
+vi vis;
+vector <char> vc;
+bool f = 0;
+bool isValid(int j) {
+	for(int i = 0; i < graph[j].size();j++) {
+		if(vis[graph[j][i]]) return 0;
+	}
+	return 1;
+}
+void backtrack(string nws){
+	if(nws.size() == vc.size()) {
+		f = 1;
+		for(int  i = 0; i < nws.size();i++) {
+			
+			if(i){
+				cout<< " "<< nws[i];
+			}
+			else {
+				cout << nws[i];
+			}
+		}
+		cout << endl;
+		return;
+	}
+	for(int i = 0; i < vc.size(); i++) {
+		if(!vis[i]) {
+			if(isValid(i)){
+				vis[i] = 1;
+				backtrack(nws+vc[i]);
+				vis[i] = 0;
+			}
+		}
+	}
+}
+int main(){	
+	int T;
+	scanf("%d\n\n", &T);
+	
+	while(T--) {
+		string s;
+		gl(s);
+		sort(s.begin(),s.end());
+		stringstream ss;
+		ss << s;
+		char c,space;
+		int i = 0;
+		map<char,int> mc;
+		while(ss >> c  ) {
+			vc.push_back(c);
+			mc[c] = i;
+			i++;
+		}
+		
+		graph.resize(vc.size()+1);
+		vis.assign(vc.size()+1,0);
+		ss.clear();
+		gl(s);
+		ss << s;
+		char a,b;
+		while(ss >> a >> c >> b) {
+			graph[mc[a]].push_back(mc[b]);
+		}
+		backtrack("");
+		if(!f){
+			cout << "NO" << endl;
+		}
+		f = 0;
+		getchar();
+		vc.clear();
+		graph.clear();
+		if(T) cout << endl;
+	}
+	return 0;
+}
+
+
+
+
