@@ -1,0 +1,79 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#include <climits>
+#include <cstdlib>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vvi vector <vector<int> >
+#define vvc vector <vector<char> >
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define mp make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z))  
+#define min3(x, y, z) min(x,min(y,z))
+#define mmx INT_MAX 
+#define mmn INT_MIN
+typedef long long ll;
+int dr[] = {0, 0 , 1, -1, 1, -1, 1, -1};
+int dc[] = {1, -1, 0, 0, 1, -1, -1, 1};
+
+using namespace std;
+vvi graph;
+vi color;
+bool Bipartite(int s){
+	queue<int> q;
+	q.push(s);
+	color[s] = 0;
+	bool f=1;
+	while(!q.empty() && f) {
+		int u = q.front();
+		q.pop();
+		for(int i = 0;i < graph[u].size();i++) {
+			int v = graph[u][i];
+			if(color[v] == -1){
+				color[v] = 1 - color[u];
+				q.push(v);
+			}
+			else if ( color[u] == color[v]){
+				f = 0;
+			}
+		}
+	}
+	return f;
+}
+int main(){	
+	int N, x, y;
+	while(cin >> N && N){
+		graph.resize(N);
+		color.assign(N,-1);
+		while(cin>>x>> y && x && y) {
+			graph[x-1].push_back(y-1);
+			graph[y-1].push_back(x-1);
+		}
+		cout << ((Bipartite(0)) ? "YES":"NO") << endl;
+		graph.clear();
+	}
+	
+	return 0;
+}
+
+
+
+
