@@ -1,0 +1,110 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#include <climits>
+#include <cstdlib>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vvi vector <vector<int> >
+#define vvc vector <vector<char> >
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define mp make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z))  
+#define min3(x, y, z) min(x,min(y,z))
+#define mmx INT_MAX 
+#define mmn INT_MIN
+typedef long long ll;
+int dr[] = {1, 2 , -1, 2, -2, -2, 1, -1};
+int dc[] = {2, 1, 2, -1, 1, -1, -2, -2};
+
+using namespace std;
+vvi graph;
+vi vis;
+vi order;
+vector<char> vc;
+void topologicalSortDFS(int u) {
+	vis[u] = 1;
+	for(int i =0;i< graph[u].size();i++){
+		int v = graph[u][i];
+		if(!vis[v]) {
+			topologicalSortDFS(v);
+		}
+	}
+	order.push_back(u);
+}
+int check(string s,string s2) {
+	int N = min(s.size(),s2.size());
+	for(int i = 0; i < N;i++) {
+		if(s[i] != s2[i]) {
+			return i;
+		}
+	}
+	return -1;
+}
+bool sortby(int i,int j){
+	return vc[i] > vc[j];
+}
+int main(){	
+	string s;
+	vs v;
+	map<char,int> m;
+	
+	int b = 0;
+	
+	while(cin >> s) {
+		
+		for(int i = 0;i < s.size();i++) {
+			if(!m[s[i]]){
+				m[s[i]]= ++b;
+				vc.push_back(s[i]);
+			}
+		}
+		if(s[0] == '#') {
+			int N = vc.size();
+			graph.resize(N);
+			vis.assign(N,0);
+			for(int i = 0; i < v.size()-1;i++) {
+				int a = check(v[i],v[i+1]);
+				
+				if(a != -1) {
+					char c = v[i][a],c1 = v[i+1][a];
+					int x = m[c]-1,y = m[c1]-1;
+					graph[x].push_back(y);
+					sort(graph[x].begin(),graph[x].end(),sortby);
+				}
+			}
+			topologicalSortDFS(0);
+			for(int i = order.size()-1; i >= 0;i--){
+				cout << vc[order[i]];
+			}
+			cout << endl;
+			graph.clear();
+			order.clear();
+			vc.clear();
+			m.clear();
+			v.clear();	
+			b=0;	
+			continue;	
+		}
+		v.push_back(s);
+	}
+	
+	return 0;
+}
