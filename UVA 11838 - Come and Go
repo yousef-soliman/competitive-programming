@@ -1,0 +1,98 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#include <climits>
+#include <cstdlib>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vvi vector <vector<int> >
+#define vvc vector <vector<char> >
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define mp make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z))  
+#define min3(x, y, z) min(x,min(y,z))
+#define mmx INT_MAX 
+#define mmn INT_MIN
+typedef long long ll;
+int dr[] = {1, 2 , -1, 2, -2, -2, 1, -1};
+int dc[] = {2, 1, 2, -1, 1, -1, -2, -2};
+
+using namespace std;
+vvi g;
+vi vis;
+vi low;
+vi num;
+int cnt;
+int cont = 0;
+vi s;
+void SCC(int u){
+	low[u] = num[u] = cnt++;
+	vis[u] = 1;
+	s.push_back(u);
+	for(int i = 0; i < g[u].size();i++) {
+		int v = g[u][i];
+		if(vis[v] == -1)
+			SCC(v);
+		if(vis[v]) {
+			low[u] = min(low[u],low[v]);
+		} 
+	}
+	if(low[u] == num[u]){
+		++cont;
+		int v;
+		while(1){
+			v = s.back();
+			s.pop_back();
+			vis[v] = 0;
+			if(u == v) break;
+			
+		}
+	}
+}
+int main(){	
+	int N ,M;
+	int x,y,q;
+	while(cin >> N >>M && N ,M) {
+		g.resize(N);
+		vis.assign(N,-1);
+		low.assign(N,-1);
+		num.assign(N,-1);
+		cnt = 0;
+		cont = 0;
+		for(int i = 0; i < M;i++) {
+			cin >> x >> y >> q;
+			if(q == 1) {
+				g[x-1].push_back(y-1);
+			} else {
+				g[x-1].push_back(y-1);
+				g[y-1].push_back(x-1);
+			}
+		}
+		int f = 1;
+		for(int i =0; i < N ; i++) {
+			if(vis[i] == -1) {
+				SCC(i);
+			}
+		}
+		cout << (cont==1)<< endl;
+		g.clear();
+	}
+	return 0;
+}
