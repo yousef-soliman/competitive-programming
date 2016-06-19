@@ -1,0 +1,117 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#include <climits>
+#include <cstdlib>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vvi vector <vector<int> >
+#define vvc vector <vector<char> >
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define mp make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z))  
+#define min3(x, y, z) min(x,min(y,z))
+#define mmx INT_MAX 
+#define mmn INT_MIN
+typedef long long ll;
+int dr[] = {1, 2 , -1, 2, -2, -2, 1, -1};
+int dc[] = {2, 1, 2, -1, 1, -1, -2, -2};
+
+using namespace std;
+vvi g;
+vi vis;
+vi num;
+vi low;
+vs names;
+int cnt = 0;
+vi st;
+vector <vs> vv;
+void SCC(int u) {
+	num[u] = low[u] = cnt++;
+	vis[u] = 1;
+	st.push_back(u);
+	for(int i = 0;i < g[u].size();i++) {
+		int v = g[u][i];
+		if(vis[v] == -1) {
+			SCC(v);
+		}
+		if(vis[v]) {
+			low[u] = min(low[u],low[v]);
+		}
+	}
+	if(low[u] == num[u]) {
+		int v;
+		vs vd;
+		do {
+			v = st.back();
+			st.pop_back();
+			vis[v] = 0;
+			vd.push_back(names[v]);
+		}while(u != v);
+		vv.push_back(vd);
+	}
+}
+int main(){	
+	int N ,M;
+	map<string ,int> m;
+	int t =0;
+	while(cin >> N >> M && N && M) {
+		if(t) cout << endl;
+		t++;
+		printf("Calling circles for data set %d:\n",t);
+		g.resize(N);
+		cnt = 0;
+		low.assign(N,-1);
+		vis.assign(N,-1);
+		num.assign(N,-1);
+		string s,s1;
+		int c = 1;
+		for(int i = 0;i < M; i++) {
+			cin >> s >> s1;
+			if(m[s] == 0){
+				m[s] = c++;
+				names.push_back(s);
+			}
+			if(m[s1] == 0){
+				m[s1] = c++;
+				names.push_back(s1);
+			}
+			g[m[s]-1].push_back(m[s1]-1);
+		}
+		for(int i = 0; i < N; i++) {
+			if(vis[i] == -1){
+				SCC(i);
+			}
+		}
+		for(int i = vv.size()-1; i >= 0; i--){
+			for(int j = 0; j < vv[i].size(); j++){
+				if(j)cout <<", ";
+				cout << vv[i][j]; 
+			}
+			cout << endl;
+		}
+		g.clear();
+		m.clear();
+		st.clear();
+		names.clear();
+		vv.clear();
+	}
+	return 0;
+}
