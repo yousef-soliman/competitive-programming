@@ -1,0 +1,97 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#include <climits>
+#include <cstdlib>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vvi vector <vector<int> >
+#define vvc vector <vector<char> >
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define mp make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z))  
+#define min3(x, y, z) min(x,min(y,z))
+#define mmx INT_MAX 
+#define mmn INT_MIN
+typedef long long ll;
+int dr_k[] = {1, 2 , -1, 2, -2, -2, 1, -1};
+int dc_k[] = {2, 1, 2, -1, 1, -1, -2, -2};
+
+using namespace std;
+int dr[] = {1, -1 , 0, 0};
+int dc[] = {0, 0, 1, -1};
+char g[51][51];
+int N,M;
+int cnt = 0;
+void dfsx(int r,int c) {
+	if(r < 0 || r >= N||c < 0 || c >= M) return;	
+	if(g[r][c] == '.'||g[r][c] == '*') return;
+	g[r][c] = '*';
+	for(int i = 0; i< 4 ;i++){
+		dfsx(r+dr[i],c+dc[i]);
+	}
+}
+void dfs(int r,int c) {
+	
+	if(r < 0 || r >= N||c < 0 || c >= M) return;	
+	if(g[r][c] == '.') return;
+	if(g[r][c] == 'X'){
+		dfsx(r,c);
+		cnt++;
+	}
+	g[r][c] = '.';
+	for(int i = 0; i< 4 ;i++){
+		dfs(r+dr[i],c+dc[i]);
+	}
+}
+int main(){	
+	int t =0;
+	while(cin >> M >> N && N&&N) {
+		t++;
+		getchar();
+		for(int i = 0;i < N;i++) {
+			for(int j = 0; j < M;j++) {
+				scanf("%c",&g[i][j]);
+			}
+			getchar();
+		}	
+		vi res;
+		for(int i = 0;i < N;i++) {
+			for(int j = 0; j < M;j++) {
+				if(g[i][j] != '.'){
+					dfs(i,j);
+					res.push_back(cnt);
+					cnt = 0;
+				}
+			}
+		}
+		sort(res.begin(),res.end());
+		printf("Throw %d\n",t);
+		for(int i = 0;i < res.size();i++){
+			if(i) cout<<" ";
+			cout << res[i];
+		}
+		cout<<endl;
+		cout<<endl;
+		memset(g,0,sizeof(g));
+	}
+	
+	return 0;
+}
