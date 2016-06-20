@@ -1,0 +1,77 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#include <climits>
+#include <cstdlib>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vvi vector <vector<int> >
+#define vvc vector <vector<char> >
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define mp make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z))  
+#define min3(x, y, z) min(x,min(y,z))
+#define mmx INT_MAX 
+#define mmn INT_MIN
+typedef long long ll;
+int dr_k[] = {1, 2 , -1, 2, -2, -2, 1, -1};
+int dc_k[] = {2, 1, 2, -1, 1, -1, -2, -2};
+
+using namespace std;
+int dr[] = {1, -1 , 0, 0};
+int dc[] = {0, 0, 1, -1};
+vs v;
+bool f = 0;
+void floodfill(int r,int c,char cc){
+	
+	if(r < 0|| r >= v.size()||c < 0|| c >= v[r].size()) return;
+	if(v[r][c] == 'X' || v[r][c] == cc && f)return;
+	v[r][c] = cc;
+	f = 1;
+	for(int i = 0; i < 4;i++) {
+		floodfill(r+dr[i],c+dc[i],cc);
+	}
+}
+int main(){	
+	string s;
+	int l = 0;
+	while(gl(s)){
+		if(s[0] == '_'){
+			for(int i = 0; i < v.size();i++){
+				for(int j = 0; j < v[i].size(); j++) {
+					if(v[i][j] != 'X' &&v[i][j] != ' ') {
+						floodfill(i,j,v[i][j]);
+						f = 0;
+					} 
+				}
+			}
+			for(int i = 0; i < v.size();i++){
+				cout << v[i] << endl;
+			}
+			cout << s<< endl;
+			v.clear();
+				
+		}
+		else{
+			v.push_back(s);
+		}
+	}
+	return 0;
+}
