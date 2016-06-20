@@ -1,0 +1,87 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#include <climits>
+#include <cstdlib>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vvi vector <vector<int> >
+#define vvc vector <vector<char> >
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define mp make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z))  
+#define min3(x, y, z) min(x,min(y,z))
+#define mmx INT_MAX 
+#define mmn INT_MIN
+typedef long long ll;
+int dr_k[] = {1, 2 , -1, 2, -2, -2, 1, -1};
+int dc_k[] = {2, 1, 2, -1, 1, -1, -2, -2};
+
+using namespace std;
+int dr[] = {1, -1 , -1, 0, 0, 1};
+int dc[] = {1, -1, 0, -1, 1, 0};
+char a[201][201];
+int N;
+bool f = 1;
+bool isValid(int r,int c) {
+	if(r < 0 || r >= N||c < 0 || c >= N) return 0;
+	return 1;
+}
+void dfs(int r,int c,char cc) {
+	if(r == N-1 && cc=='b') f = 0;
+	if(c == N-1 && cc=='w') f = 0;
+	a[r][c] = '.';
+	for(int i =0 ;i < 6 && f;i++) {
+		if(isValid(r+dr[i],c+dc[i]) && a[r+dr[i]][c+dc[i]] == cc) {
+			dfs(r+dr[i],c+dc[i],cc);
+		}
+	}
+}
+int main(){	
+	int t= 0;
+	while(cin >> N && N) {
+		t++;
+		f = 1;
+		getchar();
+		for(int i = 0;i < N;i++){
+			for(int j = 0;j < N;j++){
+				scanf("%c",&a[i][j]);
+			}
+			getchar();
+		}
+		for(int i = 0;i < N && f; i++) {
+			if(a[i][0] == 'w'){
+				dfs(i,0,'w');
+			}
+		}
+		if(f){
+			for(int i = 0;i < N && f; i++) {
+				if(a[0][i] == 'b')
+					dfs(0,i,'b');
+			}
+			cout << t << " " << "B"<<endl;
+		}else{
+			cout << t << " " << "W"<<endl;
+		}
+		memset(a,0,sizeof(a));
+		
+	}
+	return 0;
+}
