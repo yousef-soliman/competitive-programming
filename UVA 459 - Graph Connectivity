@@ -1,0 +1,81 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#include <climits>
+#include <cstdlib>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vvi vector <vector<int> >
+#define vvc vector <vector<char> >
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define mp make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z))  
+#define min3(x, y, z) min(x,min(y,z))
+#define mmx INT_MAX 
+#define mmn INT_MIN
+typedef long long ll;
+int dr_k[] = {1, 2 , -1, 2, -2, -2, 1, -1};
+int dc_k[] = {2, 1, 2, -1, 1, -1, -2, -2};
+
+using namespace std;
+int dr[] = {1, -1 , -1, 0, 0, 1,-1,1};
+int dc[] = {1, -1, 0, -1, 1, 0,1,-1};
+vvi g;
+vi vis;
+void dfs(int u){
+	vis[u]= 1;
+	for(int i =0; i < g[u].size();i++) {
+		int v = g[u][i];
+		if(!vis[v]){
+			dfs(v);
+		}
+	}
+}
+int main(){	
+	int T;
+	cin >> T;
+	char c;
+	string s;
+	while(T--) {
+		cin >> c;
+		int N = (c - 'A')+1;
+		g.resize(N);
+		vis.assign(N,0);
+		getchar();
+		while(gl(s)) {
+			if(s.size() == 0) break;
+			int x = s[0]-'A';
+			int y = s[1]-'A';
+			g[x].push_back(y);
+			g[y].push_back(x);
+		}
+		int cnt = 0;
+		for(int i =0; i < N; i++) {
+			if(!vis[i]) {
+				cnt++;
+				dfs(i);
+			}
+		}
+		cout << cnt << endl;
+		g.clear();
+		if(T)cout << endl;
+	}
+	return 0;
+}
