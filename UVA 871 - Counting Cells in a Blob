@@ -1,0 +1,88 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#include <climits>
+#include <cstdlib>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vvi vector <vector<int> >
+#define vvc vector <vector<char> >
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define mp make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z))  
+#define min3(x, y, z) min(x,min(y,z))
+#define mmx INT_MAX 
+#define mmn INT_MIN
+typedef long long ll;
+int dr_k[] = {1, 2 , -1, 2, -2, -2, 1, -1};
+int dc_k[] = {2, 1, 2, -1, 1, -1, -2, -2};
+
+using namespace std;
+int dr[] = {1, -1 , 0, 0,1,-1,-1,1};
+int dc[] = {0, 0, 1, -1,1,-1,1,-1};
+char g[26][26];
+int cnt = 0;
+int l,m;
+void floodfill(int r,int c) {
+	
+	if(r < 0|| r >= l||c < 0|| c >= m)return;
+	if(g[r][c] == '0') return;
+	g[r][c] = '0';
+	cnt++;
+	for(int i = 0; i < 8; i++) {
+		floodfill(r+dr[i],c+dc[i]);
+	}
+	
+}
+int main(){	
+	int T;
+	cin >> T;
+	getchar();
+	getchar();
+	string s;
+	while(T--) {
+		memset(g,0,sizeof(g));
+		l = 0;
+		m = 0;
+		while(gl(s)){
+			if(s.size() == 0) break;
+			m = s.size();
+			for(int i = 0; i < s.size();i++) {
+				g[l][i] = s[i];
+			}
+			l++;
+		}
+		int mx = 0;
+		cnt = 0;
+		for(int i = 0; i < l;i++){
+			for(int j = 0; j < m;j++){
+				if(g[i][j] == '1') {
+					
+					floodfill(i,j);
+					mx = max(mx,cnt);
+					cnt = 0;
+				}
+			}
+		}
+		cout << mx << endl;
+		if(T)cout << endl;
+	}
+	return 0;
+}
