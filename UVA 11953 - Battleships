@@ -1,0 +1,81 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#include <climits>
+#include <cstdlib>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vvi vector <vector<int> >
+#define vvc vector <vector<char> >
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define mp make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z))  
+#define min3(x, y, z) min(x,min(y,z))
+#define mmx INT_MAX 
+#define mmn INT_MIN
+typedef long long ll;
+int dr_k[] = {1, 2 , -1, 2, -2, -2, 1, -1};
+int dc_k[] = {2, 1, 2, -1, 1, -1, -2, -2};
+
+using namespace std;
+int dr[] = {1, -1, 0, 0};
+int dc[] = {0, 0, 1, -1};
+char g[101][101];
+int cnt = 0;
+int l,m;
+void floodfill(int r,int c) {
+	if(r < 0|| r >= l||c < 0|| c >= l)return;
+	if(g[r][c] == '.') return;
+	g[r][c] = '.';
+	for(int i = 0; i < 4; i++) {
+		floodfill(r+dr[i],c+dc[i]);
+	}
+	
+}
+int main(){	
+	int t = 0;
+	int T;
+	cin >> T;
+	while(T--) {
+		cin  >> l;
+		getchar();
+		cnt = 0;
+		t++;
+		memset(g,0,sizeof(g));
+		for(int i = 0; i < l ;i++) {
+			for(int j = 0; j < l;j++) {
+				scanf("%c",&g[i][j]);
+			}
+			getchar();
+		}
+		
+		for(int i = 0; i < l;i++){
+			for(int j = 0; j < l;j++){
+				char c = g[i][j];
+				if(g[i][j] == 'x') {
+					floodfill(i,j);
+					cnt++;
+				}
+			}
+		}
+		printf("Case %d: %d\n",t,cnt);
+	}
+	return 0;
+}
