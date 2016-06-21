@@ -1,0 +1,95 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#include <climits>
+#include <cstdlib>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vvi vector <vector<int> >
+#define vvc vector <vector<char> >
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define mp make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z))  
+#define min3(x, y, z) min(x,min(y,z))
+#define mmx INT_MAX 
+#define mmn INT_MIN
+typedef long long ll;
+int dr_k[] = {1, 2 , -1, 2, -2, -2, 1, -1};
+int dc_k[] = {2, 1, 2, -1, 1, -1, -2, -2};
+
+using namespace std;
+int dr[] = {1, -1, 0, 0};
+int dc[] = {0, 0, 1, -1};
+int g[51][51];
+int cnt = 0;
+int n,l,m;
+void dfs(int r,int c) {
+	
+	if(r < 0 || r >= n || c < 0|| c>= n)return;
+	if(g[r][c] == -1) return ;
+	cnt+=g[r][c];
+	g[r][c] = -1;
+	if( r == l){
+		if(c == m){
+			dfs(r+1,c);
+		}
+		dfs(r,c+1);
+	}else if(c == l){
+		if(r == l){
+			dfs(r,c-1);
+		}
+		dfs(r-1,c);
+	}
+	else if(r == m){
+		if(c == l){
+			dfs(r-1,c);
+		}
+		dfs(r,c-1);
+	}else if( c == m){
+		if(r == m){
+			dfs(r,c-1);
+		}
+		dfs(r+1,c);
+	}
+}
+int main(){	
+	int T,t = 0;
+	
+	while(cin >> n && n) {
+		t++;
+		cnt = 0;
+		memset(g,-1,sizeof(g));
+		for(int i = 0; i < n; i++) {
+			for(int j = 0; j < n; j++) {
+				cin >> g[i][j];
+			}
+		}
+		printf("Case %d:",t);
+		for(int i = 0; i < ceil((n*1.0)/2);i++) {
+			cnt = 0;
+			l = i;
+			m = n-i-1;
+			dfs(i,i);
+			printf(" %d",cnt);
+		}
+		cout<<endl;
+	}
+	return 0;
+}
