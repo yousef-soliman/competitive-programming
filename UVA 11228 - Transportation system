@@ -1,0 +1,119 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#include <climits>
+#include <cstdlib>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vvi vector <vector<int> >
+#define vvc vector <vector<char> >
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define mp make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z))  
+#define min3(x, y, z) min(x,min(y,z))
+#define mmx INT_MAX 
+#define mmn INT_MIN
+#define all(v) v.begin(),v.end()
+typedef long long ll;
+int dr_k[] = {1, 2 , -1, 2, -2, -2, 1, -1};
+int dc_k[] = {2, 1, 2, -1, 1, -1, -2, -2};
+
+using namespace std;
+int dr[] = {1, -1, 0, 0, 1, 1, -1, -1};
+int dc[] = {0, 0, 1, -1, 1, -1, 1, -1};
+
+class Unionfind{
+	private:
+		vi p;
+		vi rank;
+	public:
+		Unionfind(int N){
+			rank.assign(N,0);
+			for(int i = 0;i < N;i++) {
+				p.push_back(i);
+			}
+		}
+		int findSet(int i){
+			return ((p[i] == i)? i : p[i] = findSet(p[i]));
+		}
+		bool isSame(int i, int j){
+			return findSet(i) == findSet(j);
+		}
+		void Union(int i,int j){
+			int x = findSet(i);
+			int y = findSet(j);
+			if(rank[x] > rank[y]) {
+				p[y] = x;
+			}
+			else{
+				p[x] = y;
+				if(rank[x] == rank[y]){
+					rank[y]++;
+				}
+			}
+		}
+		
+};
+
+int main(){	
+	int T,N,x,y,R;
+	cin >> T;
+	int t = 0;
+	while(T--){
+		vii v;
+		vector <pair<double,ii> > g;
+		t++;
+		cin>>N >> R;
+		for(int i = 0; i < N;i++) {
+			cin >> x >> y;
+			v.push_back(mp(x,y));
+		}
+		Unionfind var(N);
+		for(int i = 0; i < N;i++){
+			for(int j = i+1; j < N;j++){
+				double dis = sqrt(pow(v[i].first-v[j].first,2)+pow(v[i].second-v[j].second,2));
+				if(dis <= R){
+					var.Union(i,j);
+				}
+				g.push_back(mp(dis,mp(i,j)));
+			}
+		}
+		sort(all(g));
+		Unionfind uf(N);
+		double mnr = 0,mnrl = 0;
+		for(int i = 0; i < g.size(); i++){
+			if(!uf.isSame(g[i].second.first,g[i].second.second)){
+				if(var.isSame(g[i].second.first , g[i].second.second)){
+						mnr += g[i].first;
+				}
+				else {
+					mnrl += g[i].first;
+				}
+				uf.Union(g[i].second.first,g[i].second.second);
+			}
+		}
+		bitset<1001> bs;
+		for(int i = 0;i < N ; i++) {
+			bs[var.findSet(i)] = 1;
+		}
+		printf("Case #%d: %d %.0f %.0f\n",t,bs.count(),mnr,mnrl);
+	}
+	return 0;
+}
