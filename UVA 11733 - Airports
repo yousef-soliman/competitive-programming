@@ -1,0 +1,99 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#include <climits>
+#include <cstdlib>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vvi vector <vector<int> >
+#define vvc vector <vector<char> >
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define mp make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z))  
+#define min3(x, y, z) min(x,min(y,z))
+#define mmx INT_MAX 
+#define mmn INT_MIN
+#define all(v) v.begin(),v.end()
+typedef long long ll;
+int dr_k[] = {1, 2 , -1, 2, -2, -2, 1, -1};
+int dc_k[] = {2, 1, 2, -1, 1, -1, -2, -2};
+int dr[] = {1, -1, 0, 0, 1, 1, -1, -1};
+int dc[] = {0, 0, 1, -1, 1, -1, 1, -1};
+using namespace std;
+class UnionFind{
+	private:
+		vi p;
+		vi rank;
+	public:
+		UnionFind(int N){
+			rank.assign(N,0);
+			for(int i = 0;i < N; i++){
+				p.push_back(i);
+			}
+		}
+		int root(int i){
+			return ((p[i] == i)? i:p[i] = root(p[i]));
+		}
+		bool isSame(int i,int j){
+			return root(i) == root(j);
+		}
+		void Union(int i,int j){
+			int x = root(i);
+			int y = root(j);
+			if(rank[x] > rank[y]){
+				p[y] = x;
+			} else {
+				p[x] = y;
+				if(rank[x] == rank[y]){
+					rank[y]++;
+				}
+			}
+		}
+};
+int main(){	
+	int T, t = 0; 
+	int N,M,x,y,z,A;
+	cin >> T;
+	while(T--){
+		t++;
+		cin >> N >> M >> A;
+		vector < pair<int,ii> > g;
+		while(M--){
+			cin >> x >> y >> z;
+			g.push_back(mp(z,mp(x,y)));
+		}
+		sort(all(g));
+		int mn = 0;
+		UnionFind uf(N);
+		for(int i = 0;i < g.size()&&g[i].first < A;i++){
+			if(!uf.isSame(g[i].second.first-1,g[i].second.second-1)) {
+				mn += g[i].first;
+				uf.Union(g[i].second.first-1,g[i].second.second-1);
+			}
+		}
+		bitset<10000>bs;
+		for(int i = 0;i < N;i++){
+			bs[uf.root(i)] = 1;
+		}
+		printf("Case #%d: %d %d\n",t,(bs.count() * A)+mn, bs.count());
+		g.clear();
+	}
+	return 0;
+}
