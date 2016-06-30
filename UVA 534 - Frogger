@@ -1,0 +1,109 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#include <climits>
+#include <cstdlib>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vvi vector <vector<int> >
+#define vvc vector <vector<char> >
+#define vs vector<string>
+#define vl vector<long long>
+#define vii vector<ii>
+#define mp make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z))  
+#define min3(x, y, z) min(x,min(y,z))
+#define mmx INT_MAX 
+#define mmn INT_MIN
+#define all(v) v.begin(),v.end()
+typedef long long ll;
+int dr_k[] = {1, 2 , -1, 2, -2, -2, 1, -1};
+int dc_k[] = {2, 1, 2, -1, 1, -1, -2, -2};
+int dr[] = {1, -1, 0, 0, 1, 1, -1, -1};
+int dc[] = {0, 0, 1, -1, 1, -1, 1, -1};
+using namespace std;
+class UnionFind{
+	private:
+		vi p;
+		vi rank;
+	public:
+		UnionFind(int N){
+			rank.assign(N,0);
+			for(int i = 0; i < N; i++){
+				p.push_back(i);
+			}
+		}
+		int root(int i){
+			return ((p[i] == i)? i: p[i] = root(p[i]));
+		}
+		bool isSame(int i,int j){
+			return root(i) == root(j);
+		}
+		void Union(int i,int j){
+			int x = root(i);
+			int y = root(j);
+			if(rank[x] > rank[y]){
+				p[y] = x;
+			}
+			else {
+				p[x] = y;
+				if(rank[x] == rank[y]){
+					rank[y]++;
+				}
+			}
+		}
+};
+bool by(pair<int,ii> p,pair<int,ii> p1){
+	return p.first > p1.first;
+}
+int main(){	
+	int N,x,y;
+	int t = 0;
+	while(cin >> N && N) {
+		t++;
+		vii v;
+		vector <pair <double,ii> > g;
+		for(int i = 0; i < N; i++){
+			cin >> x >> y;
+			v.push_back(mp(x,y));
+		}
+		for(int i = 0;i < v.size(); i++){
+			for(int j = i+1; j < v.size(); j++){
+				double dis = sqrt(pow(v[i].first - v[j].first,2)+ pow(v[i].second - v[j].second,2));
+				g.push_back(mp(dis,mp(i,j)));
+			}
+		}
+		sort(all(g));
+		UnionFind uf(N);
+		double mx = 0;
+		for(int i = 0; i < g.size();i++){
+			if(!uf.isSame(g[i].second.first,g[i].second.second)){
+				uf.Union(g[i].second.first,g[i].second.second);
+				if(uf.isSame(0,1)){
+					mx = g[i].first;
+					break;
+				}
+			}
+		}
+		printf("Scenario #%d\n",t);
+		printf("Frog Distance = %.3f\n\n",mx);
+		
+		
+	}
+	return 0;
+}
