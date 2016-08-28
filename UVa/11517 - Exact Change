@@ -1,0 +1,84 @@
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <map>
+#include <algorithm>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <utility>
+#include <cmath>
+#include <bitset>
+#include <cstring>
+#include <utility>
+#include <set>
+#include <cctype>
+#include <list>
+#include <climits>
+#include <cstdlib>
+#define ii pair<int,int>
+#define psi pair<string,int>
+#define vi vector<int>
+#define vvi vector <vector<int> >
+#define vvc vector <vector<char> >
+#define vs vector<string>
+#define vc vector<char>
+#define vl vector<long long>
+#define vii vector<ii>
+#define mp make_pair
+#define gl(s) getline(cin , s)
+#define max3(x, y, z) max(x,max(y,z))  
+#define min3(x, y, z) min(x,min(y,z))
+#define mmx INT_MAX 
+#define INF (int)1e9
+#define mmn INT_MIN
+#define all(v) v.begin(),v.end()
+#define distance(x,y) sqrt(pow(x.first - y.first ,2) + pow(x.second - y.second ,2))
+typedef long long ll;
+int dr_k[] = {1, 2 , -1, 2, -2, -2, 1, -1};
+int dc_k[] = {2, 1, 2, -1, 1, -1, -2, -2};
+int dr[] = {1, 0, 0, -1, 1, 1, -1, -1};
+int dc[] = {0, 1, -1, 0, 1, -1, 1, -1};
+int dt[] = {-1, 1};
+using namespace std;
+vi A;
+int N;
+int dp[101][10004];
+int rec(int i,int rem) {
+	if(rem <= 0) return -rem;	
+	if(i == N) return INF;
+	if(dp[i][rem] != -1) {
+		return dp[i][rem];
+	}
+	return dp[i][rem] = min(rec(i+1,rem),rec(i+1,rem-A[i]));
+}
+int dp2[101][10004];
+int rec2(int i,int rem) {
+	if(rem == 0) return 0;
+	if(i == N || rem < 0) return INF;
+	if(dp2[i][rem] != -1) {
+		return dp2[i][rem];
+	}
+	return dp2[i][rem] = min(rec2(i+1,rem),rec2(i+1,rem-A[i])+1) ;
+}
+
+int main() {
+	int T,cost;
+	cin >> T;
+	while(T--) {
+		memset(dp,-1,sizeof(dp));
+		memset(dp2,-1,sizeof(dp2));	
+		cin >> cost;
+		cin >> N;
+		A.resize(N);
+		for (int i = 0; i < N; i++) {
+			cin >> A[i]; 
+		}
+		int ans =rec(0,cost)+cost; 
+		cout << ans << " ";
+		cout << rec2(0,ans) << endl;
+		A.clear();
+	}
+	return 0;
+}
+
