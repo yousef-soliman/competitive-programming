@@ -1,0 +1,42 @@
+#include <iostream>
+#include <vector>
+#include <cstdio>
+#include <cstring>
+#define vi vector<int>
+
+using namespace std;
+
+vi v;
+int M,D;
+int dp[201][21][12];
+int fix(int i,int j) {
+	return ((i%j + j)%j);
+}
+int rec(int indx, int sum, int cnt) {
+	if(cnt == M) {
+		return sum%D == 0;
+	}
+	if(indx == v.size()) {
+		return 0;
+	}
+	if(dp[indx][sum][cnt] != -1) return dp[indx][sum][cnt];
+	return dp[indx][sum][cnt] = rec(indx+1, sum, cnt) + rec(indx+1, fix((sum+v[indx])%D,D), cnt+1);
+}
+
+int main() {
+	int N, q;
+	int t = 0;
+	while (cin >> N >> q && N && q) {
+		t++;
+		v.resize(N);
+		for(int i = 0; i <N; i++) {
+			cin >> v[i];
+		}
+		printf("SET %d:\n",t);
+		for(int i = 0; i < q; i++) {
+			memset(dp,-1,sizeof(dp));
+			cin >> D >> M;
+			printf("QUERY %d: %d\n",i+1,rec(0,0,0));
+		}
+	}
+}
