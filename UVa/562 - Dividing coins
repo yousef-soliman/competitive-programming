@@ -1,0 +1,44 @@
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <climits>
+#include <cmath>
+#include <cstdio>
+#include <cstring>
+#define vi vector<int>
+
+using namespace std;
+
+vi v;
+int S;
+int dp[101][50001];
+int rec(int indx, int sum) {
+	if(sum == S) return 0;
+	if(indx == v.size()) return 0;
+	if(dp[indx][sum] != -1) return dp[indx][sum];
+	int A = INT_MIN;
+	if(sum+v[indx] <= S) {
+		A = rec(indx+1,sum+v[indx])+v[indx];
+	} 
+	return dp[indx][sum] = max(rec(indx+1,sum),A);
+}
+int main(){
+	int T,N;
+	cin >> T;
+	while(T--) {
+		memset(dp,-1,sizeof(dp));
+		cin >> N;
+		v.resize(N);
+		S = 0;
+		for(int i  = 0; i < N; i++) {
+			cin >> v[i];
+			S += v[i]; 
+		}
+		int sum = S;
+		S /= 2;
+		int ans = rec(0,0);
+		int rem = sum - ans;
+		cout << abs(ans-rem) << endl;
+		v.clear();
+	}
+}
