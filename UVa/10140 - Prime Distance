@@ -1,0 +1,68 @@
+#include <bits/stdc++.h>
+
+#define ll long long
+
+using namespace std;
+
+ll sieve_sz;
+bitset<10000000> bs;
+vector<ll> primes;
+void sieve(ll L) {
+	sieve_sz = L+1;
+	bs.set();
+	bs[0] = bs[1] = 0;
+	for(ll i = 2; i <= sieve_sz; i++) {
+		if(bs[i]) {
+			for(ll j = i*i; j <= sieve_sz; j+=i) {
+				bs[j] = 0;
+			}
+			primes.push_back(i);
+		}
+	} 
+}
+bool isPrime(ll N) {
+	if(N <= sieve_sz) return bs[N];
+	
+	int sq = sqrt(N);
+	for(int i = 0; i < primes.size() && primes[i] <= sq; i++) {
+		if(N % primes[i] == 0) return false; 
+	}
+	return true;
+}
+
+int main() {
+	sieve(100000);
+	ll L,R;
+	while (cin >> L >> R) {
+		bool f = 1;
+		int ind = 0;
+		vector<ll> v;
+		for(ll i = L; i <= R; i++) {
+			if(isPrime(i)) {
+				v.push_back(i);
+			}
+		}
+		ll mn = 1e18;
+		ll mx = 0;
+		ll  mna,mnb;
+		ll mxa,mxb;
+		for(int i = 0; i < (int)(v.size()-1) ; i++) {
+			if(v[i+1] - v[i] < mn) {
+				mn = v[i+1] - v[i];
+				mna = v[i];
+				mnb = v[i+1];
+			}
+			if(v[i+1] - v[i] > mx) {
+				mx = v[i+1] - v[i];
+				mxa = v[i];
+				mxb = v[i+1];
+			}
+		}
+		if(mx) {
+			printf("%d,%d are closest, %d,%d are most distant.\n",mna,mnb,mxa,mxb);
+		}
+		else {
+			printf("There are no adjacent primes.\n");
+		}
+	}
+}
