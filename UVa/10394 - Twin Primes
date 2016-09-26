@@ -1,0 +1,42 @@
+#include <bits/stdc++.h>
+
+#define ll long long
+#define maxSz 1e7
+using namespace std;
+ll sieve_sz;
+vector<ll> primes;
+bitset<28900000> bs;
+void sieve(ll L) {
+	sieve_sz = L+1;
+	bs.set();
+	bs[0] = bs[1] = 0;
+	for(ll i = 2; i <= sieve_sz; i++) {
+		if(bs[i]) {
+			for(ll j = i*i; j <= sieve_sz; j+=i) {
+				bs[j] = 0;
+			}
+			primes.push_back(i);
+		}
+	}
+}
+bool isPrime(ll N) {
+	if(N <= sieve_sz) return bs[N];
+	int sq = sqrt(N);
+	for(int i = 0; i < primes.size() && primes[i] <= N ; i++) {
+		if(N & primes[i] == 0) return 0;
+	}
+	return 1;
+}
+int main() {
+	sieve(18900000);
+	vector<pair<ll,ll> >v;
+	for(int i = 0; i < primes.size()-1; i++) {
+		if(primes[i+1] - primes[i] == 2) {
+			v.push_back({primes[i],primes[i+1]}	);
+		} 
+	}
+	int N;
+	while(cin >> N) {
+		printf("(%lld, %lld)\n",v[N-1].first,v[N-1].second);
+	}
+}
