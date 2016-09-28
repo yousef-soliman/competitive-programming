@@ -1,0 +1,26 @@
+#include <bits/stdc++.h>
+
+#define ll long long
+#define maxSz 1e7
+using namespace std;
+
+int main() {
+	int N,M;
+	while(scanf("%d",&N) != EOF) {
+		vector<int> v(N);
+		for(int i = 0; i < N; i++) {
+			scanf("%d",&v[i]);
+		}
+		scanf("%d",&M);
+		sort(v.begin(),v.end());
+		int mn = maxSz;
+		int x, y;
+		for(int i = 0; i < N && v[i] <= M/2; i++) {
+			if(binary_search(v.begin(),v.end(),M-v[i]) && abs(v[i] - (M-v[i])) < mn) {
+				x = v[i];
+				y = M - v[i];
+			}
+		}
+		printf("Peter should buy books whose prices are %d and %d.\n\n",x,y);
+	}
+}
