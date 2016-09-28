@@ -1,0 +1,33 @@
+#include <bits/stdc++.h>
+
+#define ll long long
+#define maxSz 1e7
+using namespace std;
+
+int main() {
+	int N,Q,x;
+	scanf("%d",&N);
+	vector<int> v(N);
+	for(int i = 0; i < N; i++) {
+		scanf("%d",&v[i]);
+	}
+	scanf("%d",&Q);
+	vector<int>::iterator low,up;
+	for(int i = 0; i < Q; i++) {
+		scanf("%d",&x);
+		low = lower_bound(v.begin(),v.end(),x);
+		up = upper_bound(v.begin(),v.end(),x);
+		if(low != v.begin()) {
+			cout << *(--low) << " ";
+		}
+		else {
+			cout << "X" << " ";
+		}
+		if(up == v.end()){
+			cout << "X" << endl;
+		}
+		else {
+			cout << *up << endl;
+		}
+	}
+}
